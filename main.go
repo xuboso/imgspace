@@ -19,9 +19,10 @@ type Response struct {
 }
 
 func main() {
+	http.HandleFunc("/", homePage)
 	http.HandleFunc("/upload", uploadHandler)
 	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static/"))))
-	http.HandleFunc("/", homePage)
+	http.Handle("/images/", http.StripPrefix("/images/", http.FileServer(http.Dir("uploads/"))))
 	http.ListenAndServe(":8081", nil)
 }
 
@@ -56,7 +57,7 @@ func uploadHandler(w http.ResponseWriter, r *http.Request) {
 	io.Copy(f, file)
 
 	response.Code = "OK"
-	response.URL = filename + ".png"
+	response.URL = "/images/" + filename + ".png"
 	response.Filename = filename + ".png"
 
 	json.NewEncoder(w).Encode(response)
