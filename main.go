@@ -6,6 +6,7 @@ import (
 	"math/rand"
 	"net/http"
 	"os"
+	"text/template"
 	"time"
 )
 
@@ -19,7 +20,14 @@ type Response struct {
 
 func main() {
 	http.HandleFunc("/upload", uploadHandler)
+	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static/"))))
+	http.HandleFunc("/", homePage)
 	http.ListenAndServe(":8081", nil)
+}
+
+func homePage(w http.ResponseWriter, r *http.Request) {
+	t, _ := template.ParseFiles("index.html")
+	t.Execute(w, []byte{})
 }
 
 func uploadHandler(w http.ResponseWriter, r *http.Request) {
