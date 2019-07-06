@@ -3,8 +3,10 @@ package main
 import (
 	"encoding/json"
 	"io"
+	"math/rand"
 	"net/http"
 	"os"
+	"time"
 )
 
 // Response 图片上传成功后的响应体
@@ -24,7 +26,7 @@ func uploadHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Content-Type", "application/json")
 
-	file, handler, err := r.FormFile("upload-file")
+	file, _, err := r.FormFile("upload-file")
 	response := Response{
 		Code: "ERR",
 		URL:  "",
@@ -36,7 +38,8 @@ func uploadHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	defer file.Close()
 
-	f, err := os.OpenFile("./uploads/"+handler.Filename, os.O_WRONLY|os.O_CREATE, 0666)
+	filename := randStr(10)
+	f, err := os.OpenFile("./uploads/"+filename+".png", os.O_WRONLY|os.O_CREATE, 0666)
 	if err != nil {
 		json.NewEncoder(w).Encode(response)
 		return
@@ -45,9 +48,23 @@ func uploadHandler(w http.ResponseWriter, r *http.Request) {
 	io.Copy(f, file)
 
 	response.Code = "OK"
-	response.URL = handler.Filename
-	response.Filename = handler.Filename
+	response.URL = filename + ".png"
+	response.Filename = filename + ".png"
 
 	json.NewEncoder(w).Encode(response)
 	return
+}
+
+// 生成随机字符串
+func randStr(num int) string {
+
+	letters := []rune("abcdefghijklmnpqrstuvwxyzABCDEFGHIJKLMNPQRSTUVWXYZ123456789")
+	str := make([]rune, num)
+
+	rand.Seed(time.Now().UnixNano())
+	for i := range str {
+		str[i] = letters[rand.Intn(len(letters))]
+	}
+
+	return string(str)
 }
