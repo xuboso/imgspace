@@ -54,6 +54,17 @@
                     <input id="file-upload" type="file" class="file"  name="upload-file" accept="image/*">
                 </div>
             </form>
+
+            <div id="showurl" style="display: none;">
+                <ul id="navTab" class="nav nav-tabs">
+                    <li class="active"><a href="#markdowncodes" data-toggle="tab">Markdown</a></li>
+                </ul>
+                <div id="navTabContent" class="tab-content">
+                    <div class="alert alert-secondary" id="markdowncodes">
+                        <pre style="margin-top: 5px;"><code id="markdown"></code></pre>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <footer class="footer">
@@ -72,8 +83,10 @@
             });
     
             $("#file-upload").on("fileuploaded", function(event, data, previewId, index) {
-                console.log(data.id);
-                alert("success");
+                if(data.response.code == 'OK') {
+                    $("#showurl").show();
+                    $('#markdown').append("!["+ data.response.filename +"](" + data.response.url + ")" + "\n");
+                }
             });
         </script>
     </body> 
