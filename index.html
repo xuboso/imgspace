@@ -5,9 +5,17 @@
         <title>许博的博客 -- 图床</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="bootstrap-4.1/css/bootstrap.min.css" rel="stylesheet">
+        <link href="bootstrap-fileinput-5.0.2/css/fileinput.css" media="all" rel="stylesheet" type="text/css"/>
+        <link href="fontawesome.css" rel="stylesheet">
         <script src="bootstrap-4.1/js/bootstrap.min.js"></script>
         <script src="jquery-3.4.1.min.js"></script>
+        <script src="bootstrap-fileinput-5.0.2/js/fileinput.js" type="text/javascript"></script>
+        <script src="bootstrap-fileinput-5.0.2/js/locales/zh.js" type="text/javascript"></script>
+        <script src="bootstrap-fileinput-5.0.2/themes/fas/theme.js" type="text/javascript"></script>
         <style>
+            body > .container {
+                padding: 60px 15px 0;
+            }
             .footer {
                 position: absolute;
                 bottom: 0;
@@ -37,7 +45,18 @@
                 </div>
             </div>
         </nav>
+
+        <div class="container">
+            <h1>上传图片</h1>
+            
+            <form enctype="multipart/form-data">
+                <div class="form-group">
+                    <input id="file-upload" type="file" class="file"  name="upload-file" accept="image/*">
+                </div>
+            </form>
+        </div>
     </body>
+
     <footer class="footer">
         <div class="container">
             <p class="text-muted">
@@ -45,4 +64,17 @@
             </p>
         </div>
     </footer>
+
+    <script>
+        $("#file-upload").fileinput({
+            language: 'zh',
+            uploadUrl: "/jack",  //上传地址
+            allowedFileExtensions : ['jpeg', 'jpg', 'png', 'gif', 'bmp'],
+        });
+
+        $("#file-upload").on("fileuploaded", function(event, data, previewId, index) {
+            console.log(data.id);
+            alert("success");
+        });
+    </script>
 </html>
