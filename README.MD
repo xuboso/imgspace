@@ -3,5 +3,8 @@
 ### TODO
 - 使用协程提高并发处理能力
 - 做到热部署
+- 限制每个IP或每天最多上传多少张，防止被刷
 
-GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -o img_app
+编译命令
+
+`GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -o img_app`
