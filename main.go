@@ -24,7 +24,7 @@ func main() {
 	http.HandleFunc("/upload", uploadHandler)
 	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static/"))))
 	http.Handle("/images/", http.StripPrefix("/images/", http.FileServer(http.Dir("uploads/"))))
-	http.ListenAndServe(":80", nil)
+	http.ListenAndServe(":8088", nil)
 }
 
 func homePage(w http.ResponseWriter, r *http.Request) {
