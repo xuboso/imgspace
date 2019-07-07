@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"io"
+	"log"
 	"math/rand"
 	"net/http"
 	"os"
@@ -43,6 +44,7 @@ func uploadHandler(w http.ResponseWriter, r *http.Request) {
 
 	if err != nil {
 		json.NewEncoder(w).Encode(response)
+		log.Fatal(err)
 		return
 	}
 	defer file.Close()
@@ -51,6 +53,7 @@ func uploadHandler(w http.ResponseWriter, r *http.Request) {
 	f, err := os.OpenFile("./uploads/"+filename+".png", os.O_WRONLY|os.O_CREATE, 0666)
 	if err != nil {
 		json.NewEncoder(w).Encode(response)
+		log.Fatal(err)
 		return
 	}
 	defer f.Close()
