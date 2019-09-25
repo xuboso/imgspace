@@ -7,4 +7,8 @@
 
 编译命令
 
+for linux
 `GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -o img_app`
+
+for mac
+`GOOS=darwin GOARCH=amd64 CGO_ENABLED=0 go build -o img_app`

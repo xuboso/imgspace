@@ -1,0 +1,15 @@
+# https://caddyserver.com/tutorial
+caddy.example.com {
+    gzip
+    proxy / localhost:8088
+    header /images {
+        Cache-Control "public, max-age=31536000"
+    }
+
+    header (.css|.js)$ {
+        Cache-Control "public, max-age=31536000"
+    }
+
+    log /var/log/caddy_access.log
+    errors /var/log/caddy_error.log
+}
