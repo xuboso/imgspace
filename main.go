@@ -60,7 +60,7 @@ func uploadHandler(w http.ResponseWriter, r *http.Request) {
 	io.Copy(f, file)
 
 	response.Code = "OK"
-	response.URL = "http://img.xuboso.com/images/" + filename + ".png"
+	response.URL = r.Host + "/images/" + filename + ".png"
 	response.Filename = filename + ".png"
 
 	json.NewEncoder(w).Encode(response)
