@@ -7,12 +7,17 @@
 
 编译命令
 
-for linux
+for Linux
 `GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -o img_app`
 
-for mac
-`GOOS=darwin GOARCH=amd64 CGO_ENABLED=0 go build -o img_app`
+for Mac
+`GOOS=darwin GOARCH=amd64 CGO_ENABLED=0 go build -o macOS_img_app`
 
+for windows 64位
+`GOOS=windows GOARCH=amd64 CGO_ENABLED=0 go build -o windows64_img_app.exe`
+
+for windows 32位
+`GOOS=windows GOARCH=386 CGO_ENABLED=0 go build -o windows32_img_app.exe`
 
 
 1. git clone https://github.com/xuboso/imgspace.git
