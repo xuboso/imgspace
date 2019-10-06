@@ -49,7 +49,8 @@ func uploadHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	defer file.Close()
 
-	filename := randStr(10)
+	timeDate := time.Now().Format("2006-01-02")
+	filename := timeDate + "-" + randStr(10)
 	f, err := os.OpenFile("./uploads/"+filename+".png", os.O_WRONLY|os.O_CREATE, 0666)
 	if err != nil {
 		json.NewEncoder(w).Encode(response)
